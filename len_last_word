@@ -1,0 +1,16 @@
+class Solution(object):
+    def lengthOfLastWord(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        # 1. Remove trailing whitespace
+        s = s.strip()
+        
+        # 2. Find the last space
+        # rfind returns the index of the last occurrence of the substring
+        last_space_idx = s.rfind(' ')
+        
+        # 3. The length is the total length minus the index of the last space - 1
+        # If no space is found, rfind returns -1, so it correctly gives len(s)
+        return len(s) - last_space_idx - 1
