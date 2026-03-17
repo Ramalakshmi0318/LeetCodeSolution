@@ -1,0 +1,17 @@
+class Solution(object):
+    def removeDuplicates(self, nums):
+        if not nums:
+            return 0
+        
+        # 'write_index' tracks where the next unique element should be placed
+        write_index = 1
+        
+        # Iterate through the array starting from the second element
+        for i in range(1, len(nums)):
+            # If current element is different from the previous one, it's unique
+            if nums[i] != nums[i - 1]:
+                nums[write_index] = nums[i]
+                write_index += 1
+        
+        # 'write_index' represents the count of unique elements
+        return write_index
