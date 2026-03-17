@@ -1,0 +1,25 @@
+class Solution(object):
+    def longestValidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        stack = [-1] # Base index for length calculation
+        max_length = 0
+        
+        for i, char in enumerate(s):
+            if char == '(':
+                # Push the index of '('
+                stack.append(i)
+            else:
+                # Pop the last index (could be a '(' or a boundary)
+                stack.pop()
+                
+                if not stack:
+                    # If empty, this ')' is a new boundary
+                    stack.append(i)
+                else:
+                    # If not empty, calculate length from current index to new top
+                    max_length = max(max_length, i - stack[-1])
+                    
+        return max_length
