@@ -1,0 +1,19 @@
+class Solution(object):
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        # 'k' tracks the position to write the next non-val element
+        k = 0
+        
+        for i in range(len(nums)):
+            # If the current element is NOT the value we want to remove
+            if nums[i] != val:
+                # Move it to the front at index k
+                nums[k] = nums[i]
+                k += 1
+                
+        # k represents the number of elements not equal to val
+        return k
