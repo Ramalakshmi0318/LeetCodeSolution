@@ -1,0 +1,38 @@
+class Solution(object):
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        # 1. Sort to handle duplicates and enable pruning
+        candidates.sort()
+        
+        def backtrack(remain, start, path):
+            # Base case: target reached
+            if remain == 0:
+                res.append(list(path))
+                return
+            
+            for i in range(start, len(candidates)):
+                # 2. Skip duplicates at the same recursive level
+                if i > start and candidates[i] == candidates[i-1]:
+                    continue
+                
+                # 3. Pruning: If the number is bigger than what's left, 
+                # no point in looking further in a sorted list
+                if candidates[i] > remain:
+                    break
+                
+                # Choose the number
+                path.append(candidates[i])
+                
+                # Move to next index (i + 1) because each number is used once
+                backtrack(remain - candidates[i], i + 1, path)
+                
+                # Backtrack: remove the number and try the next one
+                path.pop()
+        
+        backtrack(target, 0, [])
+        return res
