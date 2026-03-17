@@ -1,0 +1,30 @@
+class Solution(object):
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        left, right = 0, len(nums) - 1
+        
+        while left <= right:
+            mid = (left + right) // 2
+            
+            if nums[mid] == target:
+                return mid
+            
+            # Determine which half is sorted
+            if nums[left] <= nums[mid]:
+                # Left half [left...mid] is sorted
+                if nums[left] <= target < nums[mid]:
+                    right = mid - 1 # Target is in the left sorted range
+                else:
+                    left = mid + 1  # Target is in the right half
+            else:
+                # Right half [mid...right] is sorted
+                if nums[mid] < target <= nums[right]:
+                    left = mid + 1  # Target is in the right sorted range
+                else:
+                    right = mid - 1 # Target is in the left half
+                    
+        return -1
