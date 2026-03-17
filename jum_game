@@ -1,0 +1,21 @@
+class Solution(object):
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        farthest = 0
+        for i in range(len(nums)):
+            # If the current index is greater than the farthest we can reach,
+            # it means we are stuck.
+            if i > farthest:
+                return False
+            
+            # Update the farthest point reachable from current index
+            farthest = max(farthest, i + nums[i])
+            
+            # Optimization: if farthest already reaches or exceeds the last index
+            if farthest >= len(nums) - 1:
+                return True
+        
+        return True
