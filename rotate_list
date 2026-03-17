@@ -1,0 +1,30 @@
+import math
+
+class Solution(object):
+    def getPermutation(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: str
+        """
+        # 1. Create a list of numbers to use
+        nums = [str(i) for i in range(1, n + 1)]
+        
+        # 2. Adjust k to be 0-indexed for easier math
+        k -= 1
+        
+        res = []
+        # 3. Determine each digit
+        for i in range(n, 0, -1):
+            # Calculate (i-1)! which is the size of each "block"
+            # for the current position
+            fact = math.factorial(i - 1)
+            
+            # Determine the index of the number to pick
+            index = k // fact
+            res.append(nums.pop(index))
+            
+            # Update k for the next position
+            k %= fact
+            
+        return "".join(res)
