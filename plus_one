@@ -1,0 +1,21 @@
+class Solution(object):
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        n = len(digits)
+        
+        # Start from the last digit and move backwards
+        for i in range(n - 1, -1, -1):
+            # If the current digit is less than 9, just add 1 and return
+            if digits[i] < 9:
+                digits[i] += 1
+                return digits
+            
+            # If the digit is 9, it becomes 0 and we continue to the next position
+            digits[i] = 0
+            
+        # If the loop finishes, it means we had all 9s (e.g., [9, 9, 9])
+        # We need to prepend a 1 at the beginning
+        return [1] + digits
