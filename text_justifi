@@ -1,0 +1,19 @@
+class Solution(object):
+    def fullJustify(self, words, maxWidth):
+        res, cur, num_of_letters = [], [], 0
+        for w in words:
+            # Check if adding the next word (plus mandatory space) exceeds maxWidth
+            if num_of_letters + len(w) + len(cur) > maxWidth:
+                # Fully justify the current line
+                for i in range(maxWidth - num_of_letters):
+                    # Distribute spaces in a round-robin fashion to the leftmost gaps
+                    # Using max(1, len(cur) - 1) handles single-word lines
+                    cur[i % (len(cur) - 1 or 1)] += ' '
+                res.append(''.join(cur))
+                cur, num_of_letters = [], 0
+            cur.append(w)
+            num_of_letters += len(w)
+        
+        # Handle the last line: left-justify and pad with remaining spaces
+        res.append(' '.join(cur).ljust(maxWidth))
+        return res
