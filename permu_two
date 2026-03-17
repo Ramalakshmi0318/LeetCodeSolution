@@ -1,0 +1,28 @@
+from collections import Counter
+
+class Solution(object):
+    def permuteUnique(self, nums):
+        res = []
+        counts = Counter(nums)
+        
+        def backtrack(current_perm):
+            # Base case: permutation is complete
+            if len(current_perm) == len(nums):
+                res.append(list(current_perm))
+                return
+            
+            for num in counts:
+                if counts[num] > 0:
+                    # Choose
+                    counts[num] -= 1
+                    current_perm.append(num)
+                    
+                    # Explore
+                    backtrack(current_perm)
+                    
+                    # Un-choose (backtrack)
+                    current_perm.pop()
+                    counts[num] += 1
+                    
+        backtrack([])
+        return res
