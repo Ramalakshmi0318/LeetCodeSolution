@@ -1,0 +1,31 @@
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        results = []
+        # Sorting helps with pruning (stopping early)
+        candidates.sort()
+        
+        def backtrack(remain, stack, start):
+            if remain == 0:
+                # Found a valid combination
+                results.append(list(stack))
+                return
+            
+            for i in range(start, len(candidates)):
+                # If the candidate is already bigger than the remainder, 
+                # no point checking further candidates (because they are sorted)
+                if candidates[i] > remain:
+                    break
+                
+                stack.append(candidates[i])
+                # Note: 'i' is passed as the start index because we can reuse the same element
+                backtrack(remain - candidates[i], stack, i)
+                # Remove the number to try the next candidate
+                stack.pop()
+                
+        backtrack(target, [], 0)
+        return results
